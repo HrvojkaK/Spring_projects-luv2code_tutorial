@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- load properties file (sport.properties) -->
+	<context:property-placeholder location="classpath:sport.properties"/>
+	
+	
+    <!-- Define your beans here -->
+    
+    <!-- define the dependency -->
+    <bean id="myMotivation"
+    class="com.luv2code.springdemo.HyperMotivationService">
+                           <!-- or DailyMotivationService -->
+    </bean>
+      
+       
+    <bean id="myCoach"
+    class="com.luv2code.springdemo.SwimmingCoach"> 
+                           <!-- or TrackCoach, BaseballCoach -->   
+    <!-- set up constructor injection -->
+    <constructor-arg ref="myMotivation"></constructor-arg>
+    </bean>
+    
+
+    
+    <bean id="myCricketCoach"
+    class="com.luv2code.springdemo.CricketCoach">
+    <!-- set up setter injection -->
+    <property name="motivationService" ref="myMotivation"/>
+    
+    <!-- inject literal values via setter (hardcoded) -->
+    <property name="emailAddress" value="crick@coaches.com"/> 
+    
+    <!-- inject literal values via setter, from the properties file -->
+    <property name="team" value="${foo.teamname}"/>    
+    </bean>
+    
+</beans>
+
+
+
+
+
